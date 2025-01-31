@@ -23,13 +23,13 @@ concurrency:
 jobs:
   prepare-ci:
     name: ⚙️ Prepare CI
-    runs-on: macos-14
+    runs-on: macos-15
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: Select Xcode 16.0
-        run: sudo xcode-select -s /Applications/Xcode_16.0.app/Contents/Developer
+      - name: Select Xcode 16.2
+        run: sudo xcode-select -s /Applications/Xcode_16.2.0.app/Contents/Developer
 
       - name: Compute package dependency cache key
         id: compute_package_hash
@@ -80,13 +80,13 @@ jobs:
     needs: prepare-ci
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: List Xcode installations
         run: sudo ls -1 /Applications | grep "Xcode"
 
-      - name: Select Xcode 16.0
-        run: sudo xcode-select -s /Applications/Xcode_16.0.app/Contents/Developer
+      - name: Select Xcode 16.2
+        run: sudo xcode-select -s /Applications/Xcode_16.2.0.app/Contents/Developer
 
       - name: Show swift version
         run: swift --version
