@@ -90,9 +90,10 @@ final class MusicDetailReactor: Reactor {
         cancelLikeSongUseCase: any CancelLikeSongUseCase,
         findArtistIDUseCase: any FindArtistIDUseCase
     ) {
-        let selectedIndex = songIDs.firstIndex(of: selectedID) ?? 0
+        let uniqueedSongIDs = Array(songIDs.uniqued())
+        let selectedIndex = Array(uniqueedSongIDs).firstIndex(of: selectedID) ?? 0
         self.initialState = .init(
-            songIDs: songIDs,
+            songIDs: uniqueedSongIDs,
             selectedIndex: selectedIndex
         )
 
@@ -102,9 +103,9 @@ final class MusicDetailReactor: Reactor {
         self.findArtistIDUseCase = findArtistIDUseCase
 
         let urls = [
-            songIDs[safe: selectedIndex - 1],
-            songIDs[safe: selectedIndex],
-            songIDs[safe: selectedIndex + 1]
+            uniqueedSongIDs[safe: selectedIndex - 1],
+            uniqueedSongIDs[safe: selectedIndex],
+            uniqueedSongIDs[safe: selectedIndex + 1]
         ]
         .compactMap { $0 }
         .map { youtubeURLGenerator.generateHDThumbnailURL(id: $0) }
